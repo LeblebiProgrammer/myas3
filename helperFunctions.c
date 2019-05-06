@@ -1,5 +1,27 @@
 #include "helperFunctions.h"
 
+char* _read(char* path) {
+	int fd = open(path, O_RDONLY);
+  	char buffer[1024];
+  	char *str;
+  	int buffer_len = 0;
+  	int str_len = 0;
+
+	if (fd > 0) {
+		while ((buffer_len = read(fd, buffer, 1023)) > 0) {
+			str_len += buffer_len;
+			str = realloc(str, (str_len + 1) * sizeof(char));
+			strncat(str, buffer, buffer_len);
+			str[str_len] = '\0';
+    	}
+    	close(fd);
+    	return str;
+  	}
+  	else {
+  		return NULL;
+  	}
+}
+
 
 char *concat(char *str1, char *str2, char delimeter){
     int length = strlen(str1) + 1 + strlen(str2) + 1;

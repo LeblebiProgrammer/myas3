@@ -1,6 +1,6 @@
 // Write CPP code here
 
-#include "h.h"
+#include "helperFunctions.h"
 
 #include <openssl/sha.h>
 

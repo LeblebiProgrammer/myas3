@@ -1,13 +1,14 @@
 CC = gcc
 CFLAGS = -g -Wall
 
-all: WTFserver
+all: wtfServer wtfClient
 
-WTFserver: server.c
-	$(CC) $(CFLAGS) -o WTFserver server.c helperFunctions.c
+wtfServer: server.c
+	$(CC) $(CFLAGS) -o wtfServer server.c helperFunctions.c
 
-
-
+wtfClient: client.c
+	$(CC) $(CFLAGS) -o wtfClient client.c helperFunctions.c -lssl -lcyrpto
 
 clean:
-	rm -f WTFserver.o WTFserver
+	rm -f wtfServer.o wtfServer
+	rm -f wtfClient.o wtfClient
