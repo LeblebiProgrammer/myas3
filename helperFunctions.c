@@ -23,6 +23,18 @@ char* _read(char* path) {
 }
 
 
+char *getLine(char* str, char eol, int n) {//eol is the end of line signifier normally '\n' but can be changed to anything
+//n is the num of eol to skip, do 0 to get the first line
+  char *ptr = str;
+  while (n > 0) {
+    ptr = strchr(ptr, eol);
+    if (ptr + 1 == NULL)
+      return NULL;
+    ptr++;
+    n--;
+  }
+}
+
 char *concat(char *str1, char *str2, char delimeter){
     int length = strlen(str1) + 1 + strlen(str2) + 1;
     int count = strlen(str1)+1;
