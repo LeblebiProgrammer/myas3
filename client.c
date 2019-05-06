@@ -476,39 +476,54 @@ void clientRollback(char *projectName, char *versionNumber){
   free(tmp);
 }
 
-int hash(char *str) {
-    unsigned long hash_n = 5381;
-    int c;
-    while (c = *str++)
-        hash_n = ((hash_n << 5) + hash_n) + c; /* hash * 33 + c */
+void hash(char *str) {
+    unsigned char temp[SHA_DIGEST_LENGTH];
+	char buf[SHA_DIGEST_LENGTH*2];
 
-    return hash_n % sizeof(unsigned int);//sizeof(unsigned long)
+	//if ( argc != 2 ) {
+	//printf("Usage: %s string\n", argv[0]);
+	//return -1;
+	//}
+	
+	
+	memset(buf, 0x0, SHA_DIGEST_LENGTH*2);
+	memset(temp, 0x0, SHA_DIGEST_LENGTH);
+
+	SHA1((unsigned char *)str, strlen(str), temp);
+	int i = 0;
+	for (i=0; i < SHA_DIGEST_LENGTH; i++) {
+	sprintf((char*)&(buf[i*2]), "%02x", temp[i]);
+	}
+
+	printf("SHA1 of %s is %s\n", str, buf);
+	
 }
 
 
 int main(int argc, char **argv)
 {
-  unsigned char temp[SHA_DIGEST_LENGTH];
-    char buf[SHA_DIGEST_LENGTH*2];
- 
-    if ( argc != 2 ) {
-        printf("Usage: %s string\n", argv[0]);
-        return -1;
-    }
- 
-    memset(buf, 0x0, SHA_DIGEST_LENGTH*2);
-    memset(temp, 0x0, SHA_DIGEST_LENGTH);
- 
-    SHA1((unsigned char *)argv[1], strlen(argv[1]), temp);
- 
-    for (i=0; i < SHA_DIGEST_LENGTH; i++) {
-        sprintf((char*)&(buf[i*2]), "%02x", temp[i]);
-    }
- 
-    printf("SHA1 of %s is %s\n", argv[1], buf);
- 
-    return 0;
+hash("HELLo my child how are you\n\t");
+  /*unsigned char temp[SHA_DIGEST_LENGTH];
+	char buf[SHA_DIGEST_LENGTH*2];
 
+	if ( argc != 2 ) {
+	printf("Usage: %s string\n", argv[0]);
+	return -1;
+	}
+
+	memset(buf, 0x0, SHA_DIGEST_LENGTH*2);
+	memset(temp, 0x0, SHA_DIGEST_LENGTH);
+
+	SHA1((unsigned char *)argv[1], strlen(argv[1]), temp);
+
+	for (i=0; i < SHA_DIGEST_LENGTH; i++) {
+	sprintf((char*)&(buf[i*2]), "%02x", temp[i]);
+	}
+
+	printf("SHA1 of %s is %s\n", argv[1], buf);
+
+    return 0;
+*/
   // int k = hash(str);
   // printf("%d",k);
     // if(argc > 1){
